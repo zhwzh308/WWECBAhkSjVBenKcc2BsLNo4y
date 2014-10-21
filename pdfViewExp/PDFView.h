@@ -22,5 +22,6 @@
 - (void)hopOnBicep;
 - (void)recognizePanGesture;
 - (void)resetView;
+- (void)restoreScale;
 
 @end

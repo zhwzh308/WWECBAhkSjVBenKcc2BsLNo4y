@@ -38,8 +38,14 @@
                               [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                               [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(numberPadDone)], nil];
     self.boxX.inputAccessoryView = numberPadToolBar;
-    
+    self.boxY.inputAccessoryView = numberPadToolBar;
     self.scaleFactorText.inputAccessoryView = [[NumberPadDoneBtn alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    NSLog(@"%s on size (%f, %f)", __PRETTY_FUNCTION__, size.height, size.width);
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.myPDFView restoreScale];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,6 +114,7 @@
 
 - (IBAction)hopOnBicep:(UIButton *)sender {
     [self.myPDFView hopOnBicep];
+    [self updateBoxes];
 }
 
 - (IBAction)panGestureAction:(UIPanGestureRecognizer *)sender {

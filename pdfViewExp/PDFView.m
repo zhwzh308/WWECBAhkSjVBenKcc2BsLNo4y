@@ -29,7 +29,7 @@ static void op_MP (CGPDFScannerRef s, void *info) {
         scaleFactor = 2.4f;
         // PDF is 1024x768 pt @2x. which is to say
         // 512 * 682.67 scale.
-        transY = 512.0f * scaleFactor;
+        transY = 523.0f * scaleFactor;
         if (self.isFront) {
             transX = 0;
         } else {
@@ -39,6 +39,7 @@ static void op_MP (CGPDFScannerRef s, void *info) {
     }
     return self;
 }
+
 -(void)drawInContext:(CGContextRef)context {
     CGContextTranslateCTM(context, transX, transY);
     // PDF page drawing expects a Lower-Left coordinate system, so we flip the coordinate system
@@ -152,8 +153,11 @@ static void op_MP (CGPDFScannerRef s, void *info) {
 }
 
 - (void)hopOnBicep {
-    scaleFactor = 4.0f;
-    transX = -scaleFactor * 105.f;
+    // Entire area (512 384) for (1024 768)
+    // disp area: (xywh in pt: 129 70 80 162.5)
+    // click area: (162.5 112 11 36)
+    scaleFactor = 5.2f;
+    transX = -(scaleFactor * 104.5f);
     transY = scaleFactor * 477.f;
     [self setNeedsDisplay];
 }
@@ -177,6 +181,17 @@ static void op_MP (CGPDFScannerRef s, void *info) {
         transX = -207.f * scaleFactor;
     }
     transY = 512.f * scaleFactor;
+    [self setNeedsDisplay];
+}
+
+-(void)restoreScale {
+    // Called on orientation change.
+    // We need to zoom out and basically reset the scrollview to look right in two-page spline view.
+    CGRect pageRect = CGPDFPageGetBoxRect( page, kCGPDFMediaBox );
+    CGFloat yScale = self.frame.size.height/pageRect.size.height;
+    CGFloat xScale = self.frame.size.width/pageRect.size.width;
+    scaleFactor = MIN( xScale, yScale );
+    NSLog(@"%s xScale:%f, yScale:%f, scaleFactor:%f.", __PRETTY_FUNCTION__, xScale, yScale,scaleFactor);
     [self setNeedsDisplay];
 }
 
