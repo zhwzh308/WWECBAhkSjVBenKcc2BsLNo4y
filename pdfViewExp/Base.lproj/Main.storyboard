@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1jc-bK-Zv3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" restorationIdentifier="PDFView" translatesAutoresizingMaskIntoConstraints="NO" id="VJV-rq-Exg" customClass="PDFView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <slider opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.20000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="VKe-Pc-HlG">
+                                        <rect key="frame" x="-2" y="570" width="604" height="31"/>
+                                        <connections>
+                                            <action selector="scalePDF:" destination="vXZ-lx-hvc" eventType="valueChanged" id="hkJ-ps-qVg"/>
+                                        </connections>
+                                    </slider>
+                                    <textField opaque="NO" clipsSubviews="YES" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="X translation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tUg-YR-Dq9">
+                                        <rect key="frame" x="8" y="20" width="120" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="BMS-q4-lbt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="go"/>
+                                        <connections>
+                                            <action selector="updateX:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="BzW-8Z-xBi"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Y translation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yak-is-qFS">
+                                        <rect key="frame" x="480" y="300" width="120" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="mK8-ZP-Yy6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="go"/>
+                                        <connections>
+                                            <action selector="updateY:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="szJ-xe-HBw"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Scale Factor" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1NN-qS-lNo">
+                                        <rect key="frame" x="8" y="300" width="120" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="MZw-ag-n4A"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="go"/>
+                                        <connections>
+                                            <action selector="updateScaling:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="UM3-7Z-t7y"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HmX-ck-TPf">
+                                        <rect key="frame" x="525" y="19" width="30" height="30"/>
+                                        <state key="normal" title="Flip">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="flipSide:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="EXC-SE-HcB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnE-Jv-Ork">
+                                        <rect key="frame" x="520" y="49" width="40" height="30"/>
+                                        <state key="normal" title="Bicep">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="hopOnBicep:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="evD-4S-F4s"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIT-DT-Z9D">
+                                        <rect key="frame" x="8" y="49" width="40" height="30"/>
+                                        <state key="normal" title="Reset">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resetPDFView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="oxt-1G-YcJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSj-pG-6qW">
+                                        <rect key="frame" x="8" y="79" width="102" height="30"/>
+                                        <state key="normal" title="Refresh Values">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="refreshUIElements:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="oP6-xt-teW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" label="PDFView"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="vIT-DT-Z9D" firstAttribute="bottom" secondItem="fSj-pG-6qW" secondAttribute="top" id="00X-fF-RKG"/>
+                                    <constraint firstItem="fSj-pG-6qW" firstAttribute="leading" secondItem="vIT-DT-Z9D" secondAttribute="leading" id="2KP-xI-OtG"/>
+                                    <constraint firstItem="hnE-Jv-Ork" firstAttribute="top" secondItem="HmX-ck-TPf" secondAttribute="bottom" id="3gm-m9-9sf"/>
+                                    <constraint firstItem="tUg-YR-Dq9" firstAttribute="leading" secondItem="VJV-rq-Exg" secondAttribute="leadingMargin" id="8jR-xd-1AR"/>
+                                    <constraint firstItem="HmX-ck-TPf" firstAttribute="centerX" secondItem="yak-is-qFS" secondAttribute="centerX" id="9Au-qe-ssG"/>
+                                    <constraint firstAttribute="width" secondItem="VKe-Pc-HlG" secondAttribute="width" id="Bui-Ep-vE4"/>
+                                    <constraint firstItem="vIT-DT-Z9D" firstAttribute="bottom" secondItem="tUg-YR-Dq9" secondAttribute="bottom" constant="29" id="CLO-8s-jzg"/>
+                                    <constraint firstItem="VKe-Pc-HlG" firstAttribute="top" secondItem="yak-is-qFS" secondAttribute="bottom" constant="240" id="Kex-PQ-j25"/>
+                                    <constraint firstItem="vIT-DT-Z9D" firstAttribute="leading" secondItem="tUg-YR-Dq9" secondAttribute="leading" id="PB9-NF-maE"/>
+                                    <constraint firstItem="HmX-ck-TPf" firstAttribute="baseline" secondItem="tUg-YR-Dq9" secondAttribute="baseline" id="bb9-8S-CWp"/>
+                                    <constraint firstItem="1NN-qS-lNo" firstAttribute="baseline" secondItem="yak-is-qFS" secondAttribute="baseline" id="e9t-6j-f4E"/>
+                                    <constraint firstAttribute="bottom" secondItem="VKe-Pc-HlG" secondAttribute="bottom" id="el4-0l-9IZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="yak-is-qFS" secondAttribute="trailing" id="hZL-ht-O9w"/>
+                                    <constraint firstItem="1NN-qS-lNo" firstAttribute="leading" secondItem="vIT-DT-Z9D" secondAttribute="leading" id="iyn-mO-EJ6"/>
+                                    <constraint firstItem="HmX-ck-TPf" firstAttribute="centerX" secondItem="hnE-Jv-Ork" secondAttribute="centerX" id="kWS-if-uRb"/>
+                                    <constraint firstItem="tUg-YR-Dq9" firstAttribute="top" secondItem="VJV-rq-Exg" secondAttribute="top" constant="20" id="uoM-W9-y2H"/>
+                                    <constraint firstItem="VKe-Pc-HlG" firstAttribute="leading" secondItem="VJV-rq-Exg" secondAttribute="leading" id="vlX-uJ-uD7"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="aMj-OB-S5l" appends="YES" id="nq2-Jn-3sa"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VJV-rq-Exg" firstAttribute="leading" secondItem="1jc-bK-Zv3" secondAttribute="leading" id="5TV-9t-ghj"/>
+                            <constraint firstItem="VJV-rq-Exg" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="I5l-RK-dBQ"/>
+                            <constraint firstItem="VJV-rq-Exg" firstAttribute="width" secondItem="1jc-bK-Zv3" secondAttribute="width" id="V7W-6b-Ver"/>
+                            <constraint firstItem="VJV-rq-Exg" firstAttribute="height" secondItem="1jc-bK-Zv3" secondAttribute="height" id="b2e-WB-U9r"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bicepButton" destination="hnE-Jv-Ork" id="iOo-bZ-FjB"/>
+                        <outlet property="boxX" destination="tUg-YR-Dq9" id="Efq-Tr-3aP"/>
+                        <outlet property="boxY" destination="yak-is-qFS" id="UuD-st-q3g"/>
+                        <outlet property="flipButton" destination="HmX-ck-TPf" id="AUD-BD-sBC"/>
+                        <outlet property="myPDFView" destination="VJV-rq-Exg" id="2Mt-Ei-cbd"/>
+                        <outlet property="panScreenGesture" destination="aMj-OB-S5l" id="J4E-ss-L0A"/>
+                        <outlet property="scaleFactor" destination="VKe-Pc-HlG" id="tTi-p6-mvG"/>
+                        <outlet property="scaleFactorText" destination="1NN-qS-lNo" id="bz1-Yh-Cgq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="aMj-OB-S5l">
+                    <connections>
+                        <action selector="panGestureAction:" destination="vXZ-lx-hvc" id="lHf-wt-G98"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+        </scene>
+    </scenes>
+</document>
