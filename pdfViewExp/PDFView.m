@@ -26,16 +26,8 @@ static void op_MP (CGPDFScannerRef s, void *info) {
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.isFront = YES;
-        scaleFactor = 2.4f;
-        // PDF is 1024x768 pt @2x. which is to say
-        // 512 * 682.67 scale.
-        transY = 523.0f * scaleFactor;
-        if (self.isFront) {
-            transX = 0;
-        } else {
-            // screen width 414 @2x, so 207 is a half.
-            transX = -341.f * scaleFactor;
-        }
+        scaleFactor = 2.f;
+        [self updateFrontBack];
     }
     return self;
 }
@@ -131,6 +123,14 @@ static void op_MP (CGPDFScannerRef s, void *info) {
 
 - (void)flipFrontBack {
     self.isFront = !self.isFront;
+    NSString *aString = self.isFront? @"showing front body" : @"showing back body";
+    NSString *bString = [NSString stringWithFormat:@"%s %@", __PRETTY_FUNCTION__, aString];
+    NSLog(@"%@", bString);
+    [self updateFrontBack];
+}
+
+- (void)updateFrontBack {
+    transY = 512.0f * scaleFactor;
     if (self.isFront) {
         transX = 0;
     } else {
@@ -156,8 +156,8 @@ static void op_MP (CGPDFScannerRef s, void *info) {
     // Entire area (512 384) for (1024 768)
     // disp area: (xywh in pt: 129 70 80 162.5)
     // click area: (162.5 112 11 36)
-    scaleFactor = 5.2f;
-    transX = -(scaleFactor * 104.5f);
+    scaleFactor = 4.5f;
+    transX = -(scaleFactor * 104.31f);
     transY = scaleFactor * 477.f;
     [self setNeedsDisplay];
 }
@@ -173,14 +173,8 @@ static void op_MP (CGPDFScannerRef s, void *info) {
 }
 
 - (void)resetView {
-    scaleFactor = 2.4f;
-    if (self.isFront) {
-        transX = 0;
-    } else {
-        // screen width 414 @2x, so 207 is a half.
-        transX = -207.f * scaleFactor;
-    }
-    transY = 512.f * scaleFactor;
+    scaleFactor = 2.f;
+    [self updateFrontBack];
     [self setNeedsDisplay];
 }
 
