@@ -43,7 +43,7 @@
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    NSLog(@"%s on size (%f, %f)", __PRETTY_FUNCTION__, size.height, size.width);
+    NSLog(@"%s device rotated to: (%f, %f)", __PRETTY_FUNCTION__, size.height, size.width);
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [self.myPDFView restoreScale];
 }
@@ -109,6 +109,7 @@
 }
 
 - (IBAction)flipSide:(UIButton *)sender {
+    NSLog(@"%s x:%f y:%f w:%f h:%f", __PRETTY_FUNCTION__, self.myPDFView.bounds.origin.x, self.myPDFView.bounds.origin.y, self.myPDFView.bounds.size.width, self.myPDFView.bounds.size.height);
     [self.myPDFView flipFrontBack];
 }
 

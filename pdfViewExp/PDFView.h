@@ -11,7 +11,7 @@
 
 @interface PDFView : QuartzView {
     @public
-    CGFloat scaleFactor, transX, transY;
+    CGFloat scaleFactor, transX, transY, bicepX, bicepY, pageWidth, pageHeight, aspectRatio;
 }
 @property BOOL isFront;
 

@@ -20,6 +20,7 @@ static void op_MP (CGPDFScannerRef s, void *info) {
     CGPDFPageRef page;
     CGAffineTransform pdfTransform;
     CGContextRef currentContext;
+    CGRect pageRect;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -49,7 +50,11 @@ static void op_MP (CGPDFScannerRef s, void *info) {
     // Finally, we draw the page and restore the graphics state for further manipulations!
     CGContextDrawPDFPage(context, page);
     CGContextRestoreGState(context);
-    NSLog(@"%s scale:%f X:%f Y:%f",__PRETTY_FUNCTION__, scaleFactor, transX, transY);
+    pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+    aspectRatio = pageRect.size.height / pageRect.size.width;
+    pageWidth = self.frame.size.width;
+    pageHeight = pageWidth * aspectRatio;
+    NSLog(@"%s\nx:%f y:%f w:%f h:%f\nscale:%f PDFw:%f h:%f", __PRETTY_FUNCTION__, self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height, scaleFactor, pageWidth, pageHeight);
 }
 
 - (BOOL)containsPoint:(CGPoint)point onPath:(UIBezierPath *)path inFillArea:(BOOL)inFill {
@@ -130,19 +135,17 @@ static void op_MP (CGPDFScannerRef s, void *info) {
 }
 
 - (void)updateFrontBack {
-    transY = 512.0f * scaleFactor;
+    transY = 0.5f * (self.frame.size.height + pageHeight) * scaleFactor;
     if (self.isFront) {
         transX = 0;
     } else {
-        // screen width 414 @2x, so 207 is a half.
-        transX = -207.f * scaleFactor;
+        transX = -scaleFactor * self.frame.size.width * 0.5f;
     }
     [self setNeedsDisplay];
 }
 
 - (void)setScale:(CGFloat)scale {
     scaleFactor = scale;
-    transY = 512.0f * scaleFactor;
     [self setNeedsDisplay];
 }
 
@@ -155,10 +158,14 @@ static void op_MP (CGPDFScannerRef s, void *info) {
 - (void)hopOnBicep {
     // Entire area (512 384) for (1024 768)
     // disp area: (xywh in pt: 129 70 80 162.5)
+    // 129 / 512 * 414 (for iPhone 6+, 375 for iPhone 6)
     // click area: (162.5 112 11 36)
-    scaleFactor = 4.5f;
-    transX = -(scaleFactor * 104.31f);
-    transY = scaleFactor * 477.f;
+    // scaleFactor = 4.5f;
+    bicepX = 258.f / pageRect.size.width * self.frame.size.width;
+    bicepY = 140.f / pageRect.size.height * self.frame.size.height;
+    NSLog(@"bicepY:%f", bicepY);
+    transX = -(scaleFactor * bicepX);
+    transY = (0.5f * (self.frame.size.height + pageHeight) - bicepY) * scaleFactor;
     [self setNeedsDisplay];
 }
 
@@ -169,19 +176,20 @@ static void op_MP (CGPDFScannerRef s, void *info) {
 }
 
 - (void)recognizePanGesture {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    // NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 - (void)resetView {
     scaleFactor = 2.f;
     [self updateFrontBack];
+    NSString *statusString = [NSString stringWithFormat:@"%s x:%f y:%f w:%f h:%f", __PRETTY_FUNCTION__, self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height];
+    NSLog(@"Status: %@", statusString);
     [self setNeedsDisplay];
 }
 
 -(void)restoreScale {
     // Called on orientation change.
     // We need to zoom out and basically reset the scrollview to look right in two-page spline view.
-    CGRect pageRect = CGPDFPageGetBoxRect( page, kCGPDFMediaBox );
     CGFloat yScale = self.frame.size.height/pageRect.size.height;
     CGFloat xScale = self.frame.size.width/pageRect.size.width;
     scaleFactor = MIN( xScale, yScale );
